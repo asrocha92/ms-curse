@@ -16,12 +16,14 @@ import com.treiner.hrpayroll.entities.Work;
  * 
  * A especificação na anotação feign cliente name, tem que ser igual a "application.proporties" configurada no projeto no qual é consulmido as requisições rest
  * 
+ * Após configuração do ribbon a configuração da URL no feign cliente não é necessária pois pode ter mais de uma instancia do mesmo prjeto só que em portas diferentes
+ * 
  * @author alex
  *
  */
 
 @Component
-@FeignClient(name = "hr-worker", url = "localhost:8001", path = "workers")
+@FeignClient(name = "hr-worker", path = "workers")
 public interface HrWorkerFeignClients {
 	
 	@GetMapping(value = "/get/{id}")

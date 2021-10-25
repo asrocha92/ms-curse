@@ -4,7 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +24,11 @@ import com.treiner.hrworker.repositories.WorkRepository;
 @RestController
 @RequestMapping(value = "/workers")
 public class WorkResource {
-
+	
+	private static Logger log = LoggerFactory.getLogger(WorkResource.class);
+	
+	@Autowired
+	private Environment env;
 	
 	@Autowired
 	private WorkRepository repository;
@@ -34,6 +41,9 @@ public class WorkResource {
 	
 	@GetMapping(value = "/get/{id}")
 	public ResponseEntity<Work> findById(@PathVariable Long id) {
+		
+		log.info("Executation PORT: " + env.getProperty("local.server.port"));
+		
 		Work work = repository.findById(id).get();
 		return ResponseEntity.ok(work);
 	}
